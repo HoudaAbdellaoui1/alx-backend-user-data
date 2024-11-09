@@ -19,5 +19,6 @@ def filter_datum(fields: list[str], redaction: str, message: str,
     Returns:
         str: The obfuscated log message with sensitive fields.
     """
-    return re.sub(rf'({"|".join(fields)})=.*?{separator}',
-                  lambda m: f'{m.group(1)}={redaction}{separator}', message)
+    msg: str = re.sub(rf'({"|".join(fields)})=.*?{separator}', lambda
+                      m: f'{m.group(1)}={redaction}{separator}', message)
+    return msg
