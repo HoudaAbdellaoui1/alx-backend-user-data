@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 
-# This module contains the function, which is used
-# to obfuscate specified fields
+"""
+
+This module contains the function, which is used
+to obfuscate specified fields
+
+"""
+
 import re
 from typing import List
 
@@ -21,5 +26,5 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         str: The obfuscated log message with sensitive fields.
     """
     msg = re.sub(rf'({"|".join(fields)})=.*?{separator}', lambda
-                      m: f'{m.group(1)}={redaction}{separator}', message)
+                 m: f'{m.group(1)}={redaction}{separator}', message)
     return msg
