@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import re
 
 # This module contains the `filter_datum` function, which is used
