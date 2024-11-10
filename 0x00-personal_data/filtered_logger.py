@@ -10,6 +10,10 @@ to obfuscate specified fields
 import logging
 import re
 from typing import List
+import os
+import mysql.connector
+from mysql.connector.connection import MySQLConnection
+
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -67,3 +71,12 @@ def get_logger() -> logging.Logger:
     handler = logging.StreamHandler()
     handler.setFormatter(RedactingFormatter(fields=PII_FIELDS))
     logger.addHandler(handler)
+
+def get_db()-> MySQLConnection:
+    db_user = os.getenv("PERSONAL_DATA_DB_USERNAME", 'root')
+    db_pwd = os.getenv("PERSONAL_DATA_DB_PASSWORD", '')
+    db_host = os.getenv("PERSONAL_DATA_DB_HOST", 'localhost')
+    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
+    connection = mysql.connector.MySQLConnection(user=db_user, password=db_pwd,
+                              host=db_host, database=db_name)
+    return connection
