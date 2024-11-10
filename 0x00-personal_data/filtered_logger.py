@@ -50,7 +50,16 @@ class RedactingFormatter(logging.Formatter):
                                   record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
 
+
 def get_logger() -> logging.Logger:
+    """
+    Creates and configures a logger named 'user_data'
+    with specific settings.
+
+    Returns:
+        logging.Logger: Configured logger object
+        with RedactingFormatter.
+    """
     logger = logging.getLogger('user_data')
     logger.setLevel(logging.INFO)
     logger.propagate = False
