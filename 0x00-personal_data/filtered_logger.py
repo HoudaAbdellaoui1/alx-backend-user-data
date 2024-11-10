@@ -2,8 +2,8 @@
 
 """
 
-This module contains the function, which is used
-to obfuscate specified fields
+This module contains the function used to obfuscate
+specified fields
 
 """
 
