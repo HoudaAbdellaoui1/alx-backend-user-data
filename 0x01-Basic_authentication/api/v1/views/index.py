@@ -42,4 +42,3 @@ def forbidden():
       - abort request after forbidden access
     """
     abort(403)
-
