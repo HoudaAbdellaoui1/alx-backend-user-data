@@ -35,13 +35,15 @@ class BasicAuth(Auth):
                                            base64_authorization_header: str
                                            ) -> str:
         """
-        Extracts and decodes the Base64 part of the Authorization header for Basic Authentication.
+        Extracts and decodes the Base64 part of the Authorization
+        header for Basic Authentication.
 
         Args:
             authorization_header (str): The Authorization header.
 
         Returns:
-            str: The decoded UTF-8 string from the Base64 part, or None if invalid.
+            str: The decoded UTF-8 string from the Base64 part,
+            or None if invalid.
         """
         if base64_authorization_header is None:
             return None
