@@ -26,8 +26,8 @@ class Auth():
 
         for excluded_path in excluded_paths:
             if fnmatch.fnmatch(path, excluded_path):
-                return False  # If path matches any excluded pattern, no authentication required
-        
+                return False
+
         return True
 
     @classmethod
