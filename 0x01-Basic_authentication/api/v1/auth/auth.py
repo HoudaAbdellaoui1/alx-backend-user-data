@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ AUTH module
 """
+import fnmatch
 from typing import List, TypeVar
 from flask import request
 from models import user
@@ -23,7 +24,11 @@ class Auth():
         if path[-1] != '/':
             path += '/'
 
-        return path not in excluded_paths
+        for excluded_path in excluded_paths:
+            if fnmatch.fnmatch(path, excluded_path):
+                return False  # If path matches any excluded pattern, no authentication required
+        
+        return True
 
     @classmethod
     def authorization_header(self, request=None) -> str:
