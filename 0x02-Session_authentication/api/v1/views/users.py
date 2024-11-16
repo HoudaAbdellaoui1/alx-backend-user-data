@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""
-Module of User views.
-
-This module contains Flask routes for performing CRUD operations on User objects. 
-It includes endpoints to retrieve all users, retrieve a specific user, delete a user, 
-create a new user, and update user details.
+""" Module of User views.
 """
 from api.v1.views import app_views
 from flask import abort, jsonify, request
@@ -16,7 +11,6 @@ def view_all_users() -> str:
     """
     GET /api/v1/users
     Retrieves all User objects.
-
     Return:
         - A JSON response containing a list of all User objects.
     """
