@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-""" Module of User views.
-"""
+"""Module of User views."""
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
@@ -8,7 +7,8 @@ from models.user import User
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def view_all_users() -> str:
-    """ GET /api/v1/users
+    """GET /api/v1/users.
+
     Return:
         - A JSON response containing a list of all User objects.
     """
@@ -18,12 +18,14 @@ def view_all_users() -> str:
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def view_one_user(user_id: str = None) -> str:
-    """ GET /api/v1/users/<user_id>
+    """GET /api/v1/users/<user_id>
+
     Path parameter:
         - user_id (str): The ID of the User.
     Return:
         - A JSON response containing the User object.
-        - 404 error if the User ID doesn't exist or if user_id is 'me' and no authenticated user is found.
+        - 404 error if the User ID doesn't exist or if user_id is 'me'
+        and no authenticated user is found.
     """
     if user_id is None:
         abort(404)
@@ -39,7 +41,8 @@ def view_one_user(user_id: str = None) -> str:
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
 def delete_user(user_id: str = None) -> str:
-    """ DELETE /api/v1/users/<user_id>
+    """DELETE /api/v1/users/<user_id>
+
     Path parameter:
         - user_id (str): The ID of the User.
     Return:
@@ -57,7 +60,8 @@ def delete_user(user_id: str = None) -> str:
 
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def create_user() -> str:
-    """ POST /api/v1/users/
+    """POST /api/v1/users/
+
     JSON body:
         - email (str): The email address of the User (required).
         - password (str): The password for the User (required).
@@ -96,7 +100,8 @@ def create_user() -> str:
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
 def update_user(user_id: str = None) -> str:
-    """ PUT /api/v1/users/<user_id>
+    """PUT /api/v1/users/<user_id>
+
     Path parameter:
         - user_id (str): The ID of the User.
     JSON body:
