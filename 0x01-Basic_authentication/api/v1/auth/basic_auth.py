@@ -113,6 +113,9 @@ class BasicAuth(Auth):
         return results[0]
 
     def current_user(self, request=None) -> TypeVar('User'):
+        """ Retrieves the User instance based on
+        the Authorization header from the request """
+
         authorization_header = self.authorization_header(request)
         if not authorization_header:
             return None
