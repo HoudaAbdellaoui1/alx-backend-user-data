@@ -10,7 +10,6 @@ from models.user import User
 def view_all_users() -> str:
     """
     GET /api/v1/users
-    Retrieves all User objects.
     Return:
         - A JSON response containing a list of all User objects.
     """
@@ -22,8 +21,6 @@ def view_all_users() -> str:
 def view_one_user(user_id: str = None) -> str:
     """
     GET /api/v1/users/<user_id>
-    Retrieves a specific User object.
-
     Path parameter:
         - user_id (str): The ID of the User.
     Return:
@@ -46,8 +43,6 @@ def view_one_user(user_id: str = None) -> str:
 def delete_user(user_id: str = None) -> str:
     """
     DELETE /api/v1/users/<user_id>
-    Deletes a specific User object.
-
     Path parameter:
         - user_id (str): The ID of the User.
     Return:
@@ -67,8 +62,6 @@ def delete_user(user_id: str = None) -> str:
 def create_user() -> str:
     """
     POST /api/v1/users/
-    Creates a new User object.
-
     JSON body:
         - email (str): The email address of the User (required).
         - password (str): The password for the User (required).
@@ -109,8 +102,6 @@ def create_user() -> str:
 def update_user(user_id: str = None) -> str:
     """
     PUT /api/v1/users/<user_id>
-    Updates a specific User object.
-
     Path parameter:
         - user_id (str): The ID of the User.
     JSON body:
