@@ -9,6 +9,7 @@ from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 from api.v1.auth.session_auth import SessionAuth
 from api.v1.auth.session_exp_auth import SessionExpAuth
+from api.v1.auth.session_db_auth import SessionDBAuth
 from api.v1.views import app_views
 
 app = Flask(__name__)
@@ -16,19 +17,15 @@ app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 auth = None
-AUTH_TYPE = getenv('AUTH_TYPE', None)
-if (AUTH_TYPE == 'auth'):
-    auth = Auth()
-
-elif (AUTH_TYPE == 'basic_auth'):
-    auth = BasicAuth()
-
-elif (AUTH_TYPE == 'session_auth'):
-    auth = SessionAuth()
-
-elif (AUTH_TYPE == 'session_exp_auth'):
-    auth = SessionExpAuth()
-
+AUTH_CLASSES = {
+    'auth': Auth,
+    'basic_auth': BasicAuth,
+    'session_auth': SessionAuth,
+    'session_exp_auth': SessionExpAuth,
+    'session_db_auth': SessionDBAuth
+}
+auth_type = getenv('AUTH_TYPE')
+auth = AUTH_CLASSES.get(auth_type)()
 
 @app.errorhandler(404)
 def not_found(error) -> str:
