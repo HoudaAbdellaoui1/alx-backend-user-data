@@ -2,6 +2,7 @@
 """ AUTH module
 """
 import fnmatch
+from os import getenv
 from typing import List, TypeVar
 from flask import request
 from models import user
@@ -10,6 +11,7 @@ from models import user
 class Auth():
     """ Auth class for handling authentication
     """
+    session_name = getenv('SESSION_NAME', '_my_session_id ')
 
     @classmethod
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
@@ -44,3 +46,11 @@ class Auth():
         """ Returns current user
         """
         return None
+
+    @classmethod
+    def session_cookie(self, request=None):
+        """ Returns cookie value from a request
+        """
+        if not request:
+            return None
+        return request.cookies.get(self.session_name)
