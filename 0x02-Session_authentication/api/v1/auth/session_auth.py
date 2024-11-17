@@ -81,12 +81,12 @@ class SessionAuth(Auth):
         user = User.search({'email': email})
         if not user:
             return jsonify({"error": "no user found for this email"}), 404
-        if user[0].password != password:
+        if not user[0].is_valid_password(password):
             return jsonify({"error": "wrong password"}), 401
         
         from api.v1.app import auth
-        auth.create_session(user[0].id)
-        result = user[0].to_json()
-        result.set_cookie(getenv('SESSION_NAME'))
+        session = auth.create_session(user[0].id)
+        result = jsonify(user[0].to_json())
+        result.set_cookie(getenv('SESSION_NAME'), session)
 
-        return jsonify(result)
+        return result
