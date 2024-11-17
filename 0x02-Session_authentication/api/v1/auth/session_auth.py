@@ -65,28 +65,4 @@ class SessionAuth(Auth):
         user_id = self.user_id_for_session_id(self.session_cookie(request))
         return User.get(user_id)
     
-    @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-    def session_login():
-        """ POST /api/v1/auth_session/login
-        Return:
-        - abort request after unauthorized
-        """
-        email = request.form.get("email")
-        password = request.form.get("password")
-        if not email:
-            return jsonify({"error": "email missing"}), 400
-        if not password:
-            return jsonify({"error": "password missing"}), 400
-        
-        user = User.search({'email': email})
-        if not user:
-            return jsonify({"error": "no user found for this email"}), 404
-        if not user[0].is_valid_password(password):
-            return jsonify({"error": "wrong password"}), 401
-        
-        from api.v1.app import auth
-        session = auth.create_session(user[0].id)
-        result = jsonify(user[0].to_json())
-        result.set_cookie(getenv('SESSION_NAME'), session)
-
-        return result
+    
