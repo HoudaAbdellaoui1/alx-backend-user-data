@@ -12,11 +12,13 @@ class SessionAuth(Auth):
     """ Session class for handling session authentication
     """
 
+    self.user_id_by_session_id = {}
+
     def __init__(self, *args: list, **kwargs: dict):
         """ Initialize a SessionAuth instance
         """
         super().__init__(*args, **kwargs)
-        self.user_id_by_session_id = dict()
+        self.user_id_by_session_id = {}
 
     def create_session(self, user_id: str = None) -> str:
         """ Creates a session ID for a user_id
