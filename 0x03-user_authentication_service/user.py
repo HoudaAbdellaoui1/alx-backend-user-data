@@ -4,9 +4,12 @@ This module defines a `User` class representing
 a table in a relational database
 """
 
-
+import logging
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
+
+
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 Base = declarative_base()
 
