@@ -2,7 +2,6 @@
 """
 DB module
 """
-import logging
 from sqlalchemy import create_engine, tuple_
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -10,7 +9,6 @@ from sqlalchemy.exc import NoResultFound, InvalidRequestError
 
 from user import Base, User
 
-logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
 
 class DB:
     """DB class
