@@ -92,10 +92,8 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            if not user:
-                raise ValueError()
-            uuid = _generate_uuid()
-            self._db.update_user(user.id, reset_token=uuid)
-            return uuid
         except NoResultFound:
             raise ValueError()
+        uuid = _generate_uuid()
+        self._db.update_user(user.id, reset_token=uuid)
+        return uuid
