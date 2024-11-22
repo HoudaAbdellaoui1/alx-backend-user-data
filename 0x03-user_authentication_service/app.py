@@ -4,7 +4,7 @@
 from flask import abort
 from flask import Flask
 from flask.json import jsonify
-from flask import request, make_response
+from flask import request, make_response, redirect
 from auth import Auth
 
 
@@ -17,28 +17,6 @@ def index() -> str:
     """ Basic route
     """
     return jsonify({"message": "Bienvenue"})
-
-# try:
-#         rj = request.get_json()
-#     except Exception:
-#         rj = None
-#     if rj is None:
-#         error_msg = "Wrong format"
-#     if error_msg is None and rj.get("email", "") == "":
-#         error_msg = "email missing"
-#     if error_msg is None and rj.get("password", "") == "":
-#         error_msg = "password missing"
-#     if error_msg is None:
-#         try:
-#             user = User()
-#             user.email = rj.get("email")
-#             user.password = rj.get("password")
-#             user.first_name = rj.get("first_name")
-#             user.last_name = rj.get("last_name")
-#             user.save()
-#             return jsonify(user.to_json()), 201
-#         except Exception as e:
-#             error_msg = f"Can't create User: {e}"
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
@@ -65,6 +43,18 @@ def login() -> str:
     response = make_response(jsonify({'email': email, 'message': "logged in"}))
     response.set_cookie("session_id", session_id)
     return response
+
+
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout() -> str:
+    """ Log a user out
+    """
+    session_id = request.cookies.get("session_id")
+    user = auth.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+    auth.destroy_session(user.id)
+    return redirect("/")
 
 
 if __name__ == "__main__":
