@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """AUTH module
 """
+from typing import Union
 import bcrypt
 from db import DB
 from user import User
@@ -66,7 +67,7 @@ class Auth:
         except NoResultFound:
             return None
 
-    def get_user_from_session_id(self, session_id: str) -> User:
+    def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """Find user by sessionID
         """
         if not session_id:
