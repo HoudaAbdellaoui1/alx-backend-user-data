@@ -3,9 +3,12 @@
 """
 from flask import Flask
 from flask.json import jsonify
+from flask import request
+from auth import Auth
 
 
 app = Flask(__name__)
+auth = Auth()
 
 
 @app.route('/', methods=['GET'], strict_slashes=False)
@@ -14,9 +17,44 @@ def index() -> str:
     """
     return jsonify({"message": "Bienvenue"})
 
+# try:
+#         rj = request.get_json()
+#     except Exception:
+#         rj = None
+#     if rj is None:
+#         error_msg = "Wrong format"
+#     if error_msg is None and rj.get("email", "") == "":
+#         error_msg = "email missing"
+#     if error_msg is None and rj.get("password", "") == "":
+#         error_msg = "password missing"
+#     if error_msg is None:
+#         try:
+#             user = User()
+#             user.email = rj.get("email")
+#             user.password = rj.get("password")
+#             user.first_name = rj.get("first_name")
+#             user.last_name = rj.get("last_name")
+#             user.save()
+#             return jsonify(user.to_json()), 201
+#         except Exception as e:
+#             error_msg = f"Can't create User: {e}"
+
+
+@app.route('/users', methods=['POST'], strict_slashes=False)
+def users() -> str:
+    """ Register a user
+    """
+    request_data = request.form
+    try:
+        user = auth.register_user(request_data.get('email'),
+                                  request_data.get('password'))
+        return jsonify({"email": user.email, "message": "user created"}), 201
+    except ValueError:
+        return jsonify({"message": "email already registered"}), 400
+
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port="5001")
 
 # from os import getenv
 # from flask import Flask, jsonify, abort, request
