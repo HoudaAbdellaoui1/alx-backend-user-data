@@ -56,6 +56,7 @@ def logout() -> str:
     auth.destroy_session(user.id)
     return redirect("/", code=302)
 
+
 @app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
     """ Get user profile
