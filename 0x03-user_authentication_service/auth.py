@@ -56,6 +56,8 @@ class Auth:
             return False
 
     def create_session(self, email: str) -> str:
+        """Creates a new session
+        """
         try:
             user = self._db.find_user_by(email=email)
             session_id = _generate_uuid()
@@ -63,3 +65,13 @@ class Auth:
             return session_id
         except NoResultFound:
             return None
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """Find user by sessionID
+        """
+        if session_id is None:
+            return None
+        user = self._db.find_user_by(session_id=session_id)
+        if user is None:
+            return None
+        return user
