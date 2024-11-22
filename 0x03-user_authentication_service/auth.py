@@ -61,6 +61,8 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
+            if user is None:
+                return None
             session_id = _generate_uuid()
             self._db.update_user(user.id, session_id=session_id)
             return session_id
@@ -70,7 +72,6 @@ class Auth:
     def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """Find user by sessionID
         """
-        user = None
         if session_id is None:
             return None
         try:
